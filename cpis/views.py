@@ -225,7 +225,7 @@ def publishpratice(request):
 @login_required(login_url=settings.LOGIN_URL)
 def studentanswer(request):
     '''学生课堂答题
-                      如果已经存在的发布了的没有过期的练习的针对班级属性与学生所在的班级一致，而且练习时间没结束
+                      如果已经存在的发布了的没有过期的练习的针对班级属性与学生所在的班级一致，而且练习时间没结束,
                     则进入答题界面，如果不一致则提示还未发布。
     '''
     user=request.user
@@ -254,7 +254,11 @@ def studentanswer(request):
             pubPractice=PubPractice.objects.get(id=pubid)
             forclass=pubPractice.forclass
             if str(user.student.clz.id) in forclass:
-                clsPractice=pubPractice.clspractice
+                if PracticeRecord.objects.filter(sno=user):
+                    return HttpResponseRedirect('cpis/studentresult') 
+                else:
+                    clsPractice=pubPractice.clspractice
+                
             else:
                 return render(request,'cpis/s_ktlx.html',context={'user':user,'position':position,
              'isStudent':isStudent,'content':True})
@@ -320,9 +324,8 @@ def studentsubmit(request):
     json_data=received_json_data['data']
     #该往数据库写这些东西   
     pr=PracticeRecord()
-    pr.sno=request.user
-    pubid=PubPractice.objects.get(id=json_data['pubid']).id
-    pr.clspratice=ClsPractice.objects.get(pubid)
+    pr.sno=request.user.student
+    pr.clspratice=PubPractice.objects.get(id=json_data['pubid']).clspractice
     pr.costtime=json_data['resttime']
     pr.hesitateinfo=json_data['hesitateinfo']
     #pr.errorinfo=
@@ -332,7 +335,7 @@ def studentsubmit(request):
     return HttpResponse(json.dumps(returnjson),content_type="application/json")
 
 def studentresult(request):
-    return HttpResponse()
+    return HttpResponse('result!')
 
 def count(request):
     return HttpResponse('aaaa')
