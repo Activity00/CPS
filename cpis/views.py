@@ -333,6 +333,9 @@ def studentsubmit(request):
 
 def studentresult(request):
     return HttpResponse()
+
+def count(request):
+    return HttpResponse('aaaa')
      
 #  for item in clsPractice:
 #         pratice={}

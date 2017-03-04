@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^getdjs/$',views.getdjs,name='getdjs'),
     url(r'^studentsubmit/$',views.studentsubmit,name='studentsubmit'),
     url(r'^studentresult/$',views.studentresult,name='studentresult'),
+    url(r'^count/$',views.count,name='count'),
 ]
 
