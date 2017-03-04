@@ -5,11 +5,19 @@
 	{%if ptatices_choice%}
 		<h3>一.选择题</h3>
 		{%for item in ptatices_choice%}
+		
 		<p>{{forloop.counter}}.{{item.topic}}</p>
 		<p>
 			A.{{item.optiona}}&nbsp;&nbsp;B.{{item.optionb}}&nbsp;&nbsp;C.{{item.optionc}}&nbsp;&nbsp;D.{{item.optiond}}&nbsp;&nbsp;E.{{item.optione}}
 		</p>
 		<p>正确答案:{{item.correctanswer}}</p>
+		{%ifequal item.correctanswer item.xzanswer %}
+		<p style="color:green;">ni de da an: {{item.xzanswer}} </p>
+		{%else%}
+		<p style="color:red;">ni de da an: {{item.xzanswer}} </p>
+		{%endifequal%}	
+		<p>jiexi:{{item.analysis}}</p>
+		<p>zhishidian:{{item.knowledgepoint}}</p>
 		<hr/>
 		{%endfor%}
 	{%endif%}	
@@ -20,7 +28,7 @@
 		<h3>二.填空题</h3>
 		{%for item in pratices_fill%}
 		<p>{{forloop.counter}}.{{item.topic}}</p>
-		<p>正确答案:{{item.correctanswer}}</p>
+		<p>正确答案:{{item.correctanswer}}</p>{{i}}
 		<hr/>
 		{%endfor%}
 	{%endif%}	

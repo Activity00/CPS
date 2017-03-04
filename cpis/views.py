@@ -267,6 +267,7 @@ def studentanswer(request):
     
     if PracticeRecord.objects.filter(sno=user.student,clspratice=clsPractice):
         return HttpResponseRedirect('/cpis/studentresult?pub_id='+str(pubid))         
+    
     choice_list=None
     fill_list=None
     judegement_list=None
@@ -326,7 +327,8 @@ def studentsubmit(request):
     pr.clspratice=PubPractice.objects.get(id=json_data['pubid']).clspractice
     pr.costtime=json_data['resttime']
     pr.hesitateinfo=json_data['hesitateinfo']
-    #pr.errorinfo=
+    pr.errorinfo=json.dumps(json_data)
+    
     #pr.position=
     pr.save()
     returnjson=200
@@ -335,6 +337,12 @@ def studentsubmit(request):
 def studentresult(request):
     pub_id=request.GET.get('pub_id')
     clsPractice=PubPractice.objects.get(id=pub_id).clspractice    
+    record=PracticeRecord.objects.get(sno=request.user.student,clspratice=clsPractice)
+    errorinfo=json.loads(record.errorinfo)
+    
+    xzanswer=[]
+    for xz in errorinfo['xz']:
+        xzanswer.append(xz['answer'])
     
     choice_list=None
     fill_list=None
@@ -351,16 +359,32 @@ def studentresult(request):
     if clsPractice.judgment_id is not None:
         judegement_list=clsPractice.judgment_id.split(',')
         judgements=Judge.objects.filter(id__in=judegement_list)
-    
+    zchoices=[]
+    for i in range(len(choices)):
+        temp={}
+        temp['xzanswer']=xzanswer[i]
+        temp['totpic']=choices[i].topic
+        temp['optiona']=choices[i].optiona
+        temp['optionb']=choices[i].optionb
+        temp['optionc']=choices[i].optionc
+        temp['optiond']=choices[i].optiond
+        temp['optione']=choices[i].optione
+        temp['analysis']=choices[i].analysis
+        temp['knowledgepoint']=choices[i].knowledgepoint
+         
+        temp['correctanswer']=choices[i].correctanswer
+        zchoices.append(temp)
+        
 #     for ch in choice_list:
 #         record= PracticeRecord.objects.get()
 #     for fill in fill_list:
 #         pass
 #     for judge in judegement_list:
 #         pass
-    context={'ptatices_choice':choices,
+    context={'ptatices_choice':zchoices,
              'pratices_fill':fills,
-             'pratices_judgement':judgements}
+             'pratices_judgement':judgements,
+             'xzanswer':xzanswer}
     
     return render(request, 'cpis/studentresult.html', context=context)
 

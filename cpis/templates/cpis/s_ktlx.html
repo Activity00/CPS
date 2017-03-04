@@ -146,21 +146,6 @@
 					});
 					datacontent.hesitateinfo= yydarr;
 					
-					
-					/* $("form.control-group").each(function(i){
-						hdinfoarr[i]=$(this).attr("num");
-					}); */
-					var hdinfoarr=new Array();
-					$(".xz").each(function(i){
-						var temp=$(this).find($("input[name=form-field-radio]:checked")).val();
-						
-					});
-					/*xzanswer=new Object()
-					hdinfoarr[0]=
-					hdinfoarr[1]=
-					hdinfoarr[2]=
-					datacontent.answerinfo=hdinfoarr */ //answer info
-					
 					var xzarr=new Array();
 					$(".xz").each(function(i){
 						var xz=new Object();
@@ -196,7 +181,6 @@
 					root.data=datacontent;
 					var jsonstr =JSON.stringify(root);
 					alert(jsonstr);
-					return;
 					$.ajax({
 						type:"POST",
 						url:"{%url 'cpis:studentsubmit'%}",

@@ -113,7 +113,7 @@ class PracticeRecord(models.Model):
     clspratice=models.ForeignKey('ClsPractice',on_delete=models.CASCADE,verbose_name='课堂练习',null=True,blank=True)
     costtime=models.IntegerField('练习时间')
     hesitateinfo=models.CharField('犹豫信息',max_length=100)
-    errorinfo=models.CharField('错误信息',max_length=100)
+    errorinfo=models.CharField('错误信息',max_length=5128)
     position=models.CharField('答题人经纬度',max_length=100)
     def __unicode__(self):
         return super(self)
