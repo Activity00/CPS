@@ -145,7 +145,22 @@
 						yydarr[i]=$(this).attr("num");
 					});
 					datacontent.hesitateinfo= yydarr;
-					//datacontent.errorinfo=
+					
+					
+					/* $("form.control-group").each(function(i){
+						hdinfoarr[i]=$(this).attr("num");
+					}); */
+					var hdinfoarr=new Array();
+					$(".xz").each(function(i){
+						var temp=$(this).find($("input[name=form-field-radio]:checked")).val();
+						
+					});
+					/*xzanswer=new Object()
+					hdinfoarr[0]=
+					hdinfoarr[1]=
+					hdinfoarr[2]=
+					datacontent.answerinfo=hdinfoarr */ //answer info
+					
 					var xzarr=new Array();
 					$(".xz").each(function(i){
 						var xz=new Object();
@@ -181,6 +196,7 @@
 					root.data=datacontent;
 					var jsonstr =JSON.stringify(root);
 					alert(jsonstr);
+					return;
 					$.ajax({
 						type:"POST",
 						url:"{%url 'cpis:studentsubmit'%}",
@@ -191,7 +207,7 @@
 							if(message>0){
 								if(message==200){
 									alert("提交成功！");
-									window.location = "{%url 'cpis:studentresult'%}";
+									window.location = "{%url 'cpis:studentresult'%}?pub_id={{pubid}}";
 								}
 							}
 						},

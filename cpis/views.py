@@ -253,12 +253,8 @@ def studentanswer(request):
             #判断该学生是否是已发布班级的学生
             pubPractice=PubPractice.objects.get(id=pubid)
             forclass=pubPractice.forclass
-            if str(user.student.clz.id) in forclass:
-                if PracticeRecord.objects.filter(sno=user):
-                    return HttpResponseRedirect('cpis/studentresult') 
-                else:
-                    clsPractice=pubPractice.clspractice
-                
+            if str(user.student.clz.id) in forclass:           
+                clsPractice=pubPractice.clspractice        
             else:
                 return render(request,'cpis/s_ktlx.html',context={'user':user,'position':position,
              'isStudent':isStudent,'content':True})
@@ -269,6 +265,8 @@ def studentanswer(request):
         return render(request,'cpis/s_ktlx.html',context={'user':user,'position':position,
              'isStudent':isStudent,'content':True})
     
+    if PracticeRecord.objects.filter(sno=user.student,clspratice=clsPractice):
+        return HttpResponseRedirect('/cpis/studentresult?pub_id='+str(pubid))         
     choice_list=None
     fill_list=None
     judegement_list=None
@@ -335,11 +333,40 @@ def studentsubmit(request):
     return HttpResponse(json.dumps(returnjson),content_type="application/json")
 
 def studentresult(request):
-    return HttpResponse('result!')
+    pub_id=request.GET.get('pub_id')
+    clsPractice=PubPractice.objects.get(id=pub_id).clspractice    
+    
+    choice_list=None
+    fill_list=None
+    judegement_list=None
+    choices=None
+    fills=None
+    judgements=None
+    if clsPractice.choice_id is not None:
+        choice_list=clsPractice.choice_id.split(',')
+        choices=Choice.objects.filter(id__in=choice_list)
+    if clsPractice.fill_id is not None:
+        fill_list=clsPractice.fill_id.split(',')
+        fills=Fill.objects.filter(id__in=fill_list)
+    if clsPractice.judgment_id is not None:
+        judegement_list=clsPractice.judgment_id.split(',')
+        judgements=Judge.objects.filter(id__in=judegement_list)
+    
+#     for ch in choice_list:
+#         record= PracticeRecord.objects.get()
+#     for fill in fill_list:
+#         pass
+#     for judge in judegement_list:
+#         pass
+    context={'ptatices_choice':choices,
+             'pratices_fill':fills,
+             'pratices_judgement':judgements}
+    
+    return render(request, 'cpis/studentresult.html', context=context)
 
 def count(request):
     return HttpResponse('aaaa')
-     
+    
 #  for item in clsPractice:
 #         pratice={}
 #         pratice['id']=item.id
