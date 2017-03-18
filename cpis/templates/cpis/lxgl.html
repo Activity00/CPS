@@ -1,7 +1,3 @@
-{%extends "cpis/base.html"%}
-{%load staticfiles%}
-{%block title%}练习列表{%endblock%}
-{%block main-content%}
 <div class="col-xs-12">
 	<h3 class="header smaller lighter blue">试题练习列表</h3>
 	<div class="table-header">
@@ -13,42 +9,18 @@
 				<div class="col-sm-6">
 					<div class="col-sm-6" id="sample-table-2_length">
 						<!-- 下拉框 -->
-						<label> 选择班级
+						<label> 刷选
 							<select id="clzz" aria-controls="sample-table-2" size="1" name="sample-table-2_length">
-								<!-- <option selected="selected" value="10">10</option> -->
-								{%for item in clzzs%}
-									<option value="{{item}}">{{item}}</option>					
-								{%endfor%}
+								<option selected="selected" value="">未发布</option>
+								<option selected="selected" value="">全部</option>
+								<option selected="selected" value="">发布</option>
+								
 							</select>
 						</label>
 					</div>
-					<div class="col-sm-6" id="sample-table-2_length">
-						<!-- 练习时间 -->
-						<label> 练习时间
-							<select id="time" aria-controls="sample-table-2" size="1" name="sample-table-2_length">
-								 <!-- <option selected="selected" value="10">10</option>  -->
-								<option value="">5</option>
-								<option value="">10</option>
-								<option value="">15</option>
-								<option value="">20</option>
-								<option value="">30</option>
-								<option value="">40</option>
-								<option value="">60</option>
-								<option value="">90</option>
-								<option value="">120</option>
-								
-							</select>
-						</label>分钟
-					</div>
-								
+										
 				</div>
 				<div class="col-sm-6">
-					<div class="col-sm-6" id="sample-table-2_length">
-						<!-- 练习时间 -->
-						<label id="jwdxx">未获取</label>
-						<button id="getLocation">点击获取位置信息</button>
-						
-					</div>
 					<div id="sample-table-2_filter" class="dataTables_filter">
 						<label>搜索: <input aria-controls="sample-table-2" type="text"></label>
 					</div>
@@ -83,7 +55,7 @@
 						</label>
 					</td>
 					<td class="">{{item.course}}</td>
-					<td class=""><a href="{%url 'cpis:teacherviewdetail'%}?id={{item.id}}">{{item.chapter}}</a></td>
+					<td class=""><a id="lxgl_praticedetail" href="#" value="{{item.id}}">{{item.chapter}}</a></td>
 					<td class="hidden-480 ">{{item.forclass}}</td>
 					<td class="hidden-480 "> 
 						{%if item.stats%}
@@ -111,30 +83,48 @@
 		<div class="col-sm-6">
 			<div id="sample-table-2_info" class="dataTables_info">
 				共{{pratices|length}}条</div>
-			</div>
-			<div class="col-sm-6">
-			<!-- <div class="dataTables_paginate paging_bootstrap">
-					<ul class="pagination">
-						<li class="prev disabled">
-							<a href="#"><i class="icon-double-angle-left"></i></a>
-						</li>
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-				<li class="next"><a href="#">
-		<i class="icon-double-angle-right"></i></a></li></ul>
-		</div> -->
-			</div>
+		</div>
+		<div class="col-sm-6">
+			<ul class="pagination">
+				<li>
+					<a href="#">首页</a>
+				</li>
+				<li>
+				{%if res.has_previous%}
+				<a href="?page={{bbs_list.previous_page_number}}">上一页</a>
+				{%endif%}
+				</li>
+				{%pagination res 10  5 as page_list%}
+				{%autoescape off%}
+				{{page_list}}
+				{%endautoescape%}
+				
+				<li>
+					{%if res.has_next%}
+					<a href="page={{res.next_page_number}}">下一页</a>
+					{%endif%}
+				</li>
+				<li>
+					<a href="?page={{res.paginator.num_pages}}">尾页</a>
+				</li>
+			</ul>
+		</div>
 	 </div>
+	 
 	</div>
   </div>
 </div>
-{%endblock%}
 
-{%block js_bottom%}
 <script type="text/javascript">
 		 	            
 		jQuery(function($) {
+				{#点击详细信息事件#}
+				$("a[id=lxgl_praticedetail]").click(function(){
+					{#应该加入栈#}
+					$(window).trigger("hashchange");
+					$(".page-content").load("{%url 'cpis:ajax_deal'%}?req=praticedetail&id="+$(this).attr("value")); 
+				});
+			
 				var jwd=""
 			    $("#getLocation").click(function(){
 			    	 if (navigator.geolocation){      
@@ -163,7 +153,8 @@
 		     		   alert("浏览器不支持");
 		     	    }
 			    });    
-			
+				
+				
 				$("a[id=publish]").each(function(){
 					$(this).click(function(){
 						if(jwd=="")
@@ -192,7 +183,7 @@
 								if(message>0){
 									if(message==200){
 										alert("发布成功！");
-										window.location = "{%url 'cpis:teacherview'%}";
+										$(".page-content").load("{%url 'cpis:ajax_deal'%}?req=lxgl"); 
 									}else if(message==400)
 									{
 										alert("该班级已发布！");
@@ -207,4 +198,31 @@
 				});
 		});
 </script>
-{%endblock%}
+
+
+<!-- <div class="col-sm-6" id="sample-table-2_length">
+						练习时间
+						<label> 练习时间
+							<select id="time" aria-controls="sample-table-2" size="1" name="sample-table-2_length">
+								 <option selected="selected" value="10">10</option> 
+								<option value="">5</option>
+								<option value="">10</option>
+								<option value="">15</option>
+								<option value="">20</option>
+								<option value="">30</option>
+								<option value="">40</option>
+								<option value="">60</option>
+								<option value="">90</option>
+								<option value="">120</option>
+								
+							</select>
+						</label>分钟
+					</div> -->
+
+<!-- <div class="col-sm-6" id="sample-table-2_length">
+						练习时间
+						<label id="jwdxx">未获取</label>
+						<button id="getLocation">点击获取位置信息</button>
+						
+					</div> -->
+

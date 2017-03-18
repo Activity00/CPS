@@ -1,26 +1,21 @@
-{%extends "cpis/base.html"%}
-{%load staticfiles%}
-
-{%block title%}添加试题{%endblock%}
-{%block main-content%}
 <div class="row">
-<div class="col-sm-3">
-	<label for="form-field-select-1">练习分类</label>
-	<select class="form-control" id="form-field-select-1">
-	<option value="">&nbsp;</option>
-		{%if course%}
-		{%for item in course%}
-	    <option value="{{item.id}}">{{item.cname}}</option>
-		{%endfor%}
-		{%endif%}								
-	</select>
+	<div class="col-sm-3">
+		<label for="form-field-select-1">练习分类</label>
+		<select class="form-control" id="form-field-select-1">
+			<option value="">&nbsp;</option>
+			{%if course%}
+			{%for item in course%}
+	   		<option value="{{item.id}}">{{item.cname}}</option>
+			{%endfor%}
+			{%endif%}								
+		</select>
+	</div>
+    <div class="col-sm-3">
+		<label class="" for="form-field-12">章节</label>
+		<input class="form-control zhangjie" placeholder="例如：第一章" id="zhangjie"></input>	
+   </div>
 </div>
-<div class="col-sm-3">
-	<label class="" for="form-field-12">章节</label>
-	<input class="form-control zhangjie" placeholder="例如：第一章" id="zhangjie"></input>	
-</div>
-</div>
-<hr/>
+
 <h3>一.选择题</h3>
 <div class="row xz" id="s0">
 <form class="form-horizontal" role="form" action="#">
@@ -172,8 +167,7 @@
 <button class="btn btn-lg btn-success" value="submit">
 	<i class="icon-ok"></i>提交
 </button>
-{%endblock%}
-{%block js_bottom%}
+
 <script type="text/javascript">
 		jQuery(function($) {
 			var $index=1;
@@ -279,8 +273,8 @@
 					success:function(message){
 						if(message>0){
 							if(message==200){
-								alert("提交成功！");
-								window.location = "{%url 'cpis:teacherview'%}";
+								alert("提交成功！");								
+								$(".page-content").load("{%url 'cpis:ajax_deal'%}?req=lxlr"); 
 							}
 						}
 					},
@@ -295,4 +289,3 @@
 		});/*end */
 			
 </script>
-{%endblock%}

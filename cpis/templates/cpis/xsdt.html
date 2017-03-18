@@ -1,0 +1,209 @@
+{#学生答题#}
+<div class="col-xs-12">
+	<h3 class="header smaller lighter blue">答题列表</h3>
+	<div class="table-header">
+		显示结果
+	</div>
+    <div class="table-responsive">
+		<div id="sample-table-2_wrapper" class="dataTables_wrapper" role="grid">
+			<div class="row">
+				<div class="col-xs-6">
+					<div style="text-align: left;">
+						<!-- 下拉框 -->
+						<label>练习筛选
+							<select id="clzz" aria-controls="sample-table-2" size="1" name="sample-table-2_length">
+								    <option selected="selected" value="10">最新</option>
+									<option value="">全部</option>					
+							</select>
+						</label>
+					</div>						
+				</div>
+				<div class="col-xs-6">
+					<div style="text-align: right;">
+						<label>搜索: <input aria-controls="sample-table-2" type="text"></label>
+					</div>
+				</div>
+				
+		 </div>
+		<!--表格正式开始  -->
+		<table aria-describedby="sample-table-2_info" id="sample-table-2" class="table table-striped table-bordered table-hover dataTable">
+			<thead>
+				<tr role="row">
+					<th style="width: 151px;" colspan="1" rowspan="1" aria-controls="sample-table-2" tabindex="0" role="columnheader"  hidden="true">编号</th>
+					<th >课程</th>
+					<th >章节</th>
+					<th >已发布班级</th>
+					<th ></th>
+					<th>操作</th>
+				</tr>
+			</thead>
+										
+			<tbody aria-relevant="all" aria-live="polite" role="alert">
+				{%for item in practices%}
+				<tr class="even"><!-- odd -->
+					<td class="">{{item.course}}</td>
+					<td class="">{{item.chapter}}</td>
+					<td class="">{{item.forclass}}</td>
+					<!-- <td class="hidden-480 ">{{item.forclass}}</td> -->
+					<td class="hidden-480 "> 
+						{%if item.stats%}
+						<span class="label label-sm label-success">已发布</span>
+						{%else%}
+						<span class="label label-sm label-warning">未发布</span>
+						{%endif%}
+					</td>
+					<!-- 操作的小图标 -->
+					<td class="">
+						<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+							 <a class="green" id="publish" name="{%url 'cpis:publishpratice'%}?id={{item.id}}" href="#">
+								  <i class="icon-pencil bigger-130"></i>
+							</a>
+							<a class="red" href="#">
+								<i class="icon-trash bigger-130"></i>
+							</a>
+						</div>
+					</td>
+			 	</tr>
+				{%endfor%}
+			</tbody>
+	   </table>
+	  <div class="row">
+		<div class="col-sm-6">
+			<div id="sample-table-2_info" class="dataTables_info">
+				共{{pratices|length}}条</div>
+			</div>
+			<div class="col-sm-6">
+		
+			</div>
+	 </div>
+	</div>
+  </div>
+</div>
+
+<script type="text/javascript">
+		 	            
+		jQuery(function($) {
+				{#点击详细信息事件#}
+				$("a[id=lxgl_praticedetail]").click(function(){
+					{#应该加入栈#}
+					$(window).trigger("hashchange");
+					$(".page-content").load("{%url 'cpis:ajax_deal'%}?req=praticedetail&id="+$(this).attr("value")); 
+				});
+			
+				var jwd=""
+			    $("#getLocation").click(function(){
+			    	 if (navigator.geolocation){      
+		        		 navigator.geolocation.getCurrentPosition(function(position){
+		        		 jwd_temp=position.coords.longitude+","+position.coords.latitude;
+		     			 jwd=jwd_temp;
+		     			 $("#jwdxx").text("获取成功");
+		        	},function(error){
+		        		switch(error.code)
+		        	    {
+		        	    case error.PERMISSION_DENIED:
+		        	      alert("请求被拒绝");
+		        	      break;
+		        	    case error.POSITION_UNAVAILABLE:
+		        	    	alert("位置信息不可用！");
+		        	      break;
+		        	    case error.TIMEOUT:
+		        	    	alert("请求超时");
+		        	      break;
+		        	    case error.UNKNOWN_ERROR:
+		        	    	alert("不知道的错误！");
+		        	      break;
+		        	    }
+		        	});
+		     	   }else{
+		     		   alert("浏览器不支持");
+		     	    }
+			    });    
+				
+				
+				$("a[id=publish]").each(function(){
+					$(this).click(function(){
+						if(jwd=="")
+						{
+							alert("地理位置不可以为空！请点击获取");
+							//return;
+						}
+						
+						var temp=$(this).attr("name").split("?");
+						var url=temp[0];
+						var id=temp[1].split("=")[1];
+						var data=new Object();
+						data.clzz=$("#clzz option:selected").text();
+						data.time=$("#time option:selected").text();
+						data.id=id;
+						data.jwd=jwd;
+						var jsondata=JSON.stringify(data);
+						alert(jsondata);
+						$.ajax({
+							type:"POST",
+							url:url,
+							contentType:"application/json;charset=utf-8",
+							data:jsondata,
+							dataType:"json",
+							success:function(message){
+								if(message>0){
+									if(message==200){
+										alert("发布成功！");
+										$(".page-content").load("{%url 'cpis:ajax_deal'%}?req=lxgl"); 
+									}else if(message==400)
+									{
+										alert("该班级已发布！");
+									}
+								}
+							},
+							error:function(message){
+								aler t("提交失败,请检查网络或者联系管理员");
+							}
+						});
+					});	
+				});
+		});
+</script>
+
+
+
+<!-- <div class="col-xs-6" id="sample-table-2_length">
+						练习时间
+						<label> 练习时间
+							<select id="time" aria-controls="sample-table-2" size="1" name="sample-table-2_length">
+								 <option selected="selected" value="10">10</option> 
+								<option value="">5</option>
+								<option value="">10</option>
+								<option value="">15</option>
+								<option value="">20</option>
+								<option value="">30</option>
+								<option value="">40</option>
+								<option value="">60</option>
+								<option value="">90</option>
+								<option value="">120</option>
+								
+							</select>
+						</label>分钟
+					</div> -->
+
+<!-- <div class="col-xs-6">
+					<div class="col-xs-6" id="sample-table-2_length">
+						练习时间
+						<label id="jwdxx">未获取</label>
+						<button id="getLocation">点击获取位置信息</button>
+						
+					</div>
+					<div id="sample-table-2_filter" class="dataTables_filter">
+						<label>搜索: <input aria-controls="sample-table-2" type="text"></label>
+					</div>
+		      </div> -->
+
+
+
+
+
+
+
+
+
+
+

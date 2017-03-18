@@ -1,7 +1,6 @@
 {%load staticfiles%}
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>长医答题系统</title>
@@ -14,7 +13,7 @@
 	<!-- 新 Bootstrap 核心 CSS 文件 -->
 	<link href="{%static 'cpis/bootstrap3.3.7/css/bootstrap.min.css'%}" rel="stylesheet">
 	<!-- 可选的Bootstrap主题文件（一般不使用） -->
-	<script src="{%static 'bootstrap3.3.7/css/bootstrap-theme.min.css'%}"></script>
+	<script src="{%static 'cpis/bootstrap3.3.7/css/bootstrap-theme.min.css'%}"></script>
 </head>
 
 <body>
@@ -47,20 +46,21 @@
                     {% csrf_token %}
                     <div class="fm-item">
                         <label for="logonId" class="form-label">学号或工号</label>
-                        <input type="text"  placeholder="输入学号或工号" maxlength="100" id="username" name="nid" class="i-text" datatype="s6-18" errormsg="用户名至少6个字符,最多18个字符！">
+                        <input type="text" value="{{username}}"  placeholder="输入学号或工号" maxlength="100" id="username" name="nid" class="i-text" datatype="s6-18" errormsg="用户名至少6个字符,最多18个字符！">
                         <div class="ui-form-explain"></div>
                     </div>
 
                     <div class="fm-item">
                         <label for="logonId" class="form-label">密码：</label>
-                        <input type="password" placeholder="请输入密码" maxlength="100" id="password" name="password" class="i-text" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！">
+                        <input type="password" value="{{password}}" placeholder="请输入密码" maxlength="100" id="password" name="password" class="i-text" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！">
                         <div class="ui-form-explain"></div>
                     </div>
-                    {%if error%}
+                     {%if error%}
 					<div class="error-box">
                         <label for="logonId" class="form-label" style="color:red">账号或密码有误！请重试</label>
                     </div>
                     {%endif%}
+                  
                     <div class="fm-item">
                         <label for="logonId" class="form-label"></label>
                         <input type="submit" value="" tabindex="4" id="send-btn" class="btn-login">
@@ -72,7 +72,6 @@
        		 </div> 
    			</div>
 		</div>
-	</div>
 	<div class="banner-shadow"></div>
 	<div class="row clearfix">
 		<div class="col-md-12 column">

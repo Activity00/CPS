@@ -19,7 +19,7 @@ from cpis.models import Course, Choice, ClsPractice, PubPractice, Fill, Judge, \
 #import django.contrib.auth.backends.ModelBackend
 # Create your views here.
 def index(request):
-    
+    #记住密码
     context={'error':request.GET.get('message')}
     return render(request, 'cpis/index.html', context)
 
@@ -33,7 +33,8 @@ def login(request):
     else:
         if user.is_active:#登陆
             auth.login(request,user)
-            return HttpResponseRedirect('/cpis/mainpage')
+            response=HttpResponseRedirect('/cpis/mainpage')
+            return response
         else:
             return HttpResponseRedirect('/cpis?message=verify_exception')
 
@@ -44,62 +45,29 @@ def logout(request):
     return HttpResponseRedirect('/cpis')
 
 @login_required(login_url=settings.LOGIN_URL)
+def ajax_deal(request):
+    req=request.GET.get('req')
+    req_m='_'+req
+    context={}
+    try:
+        context=eval(req_m)(request)   
+    except:
+        pass
+    return render(request,'cpis/%s.html'%req,context)
+
+@login_required(login_url=settings.LOGIN_URL)
 def mainPage(request):
+    '''根据用户的身份，显示不同的模板
+                 如果是教师就显示mangpage_t如果是学生就显示mainpage_t
+    '''
     user=request.user
-    position=None
-    isStudent=False
+    context={'user':user}
     try:
         if user.student:
-            position='学生端'
-            isStudent=True
+            return render(request, 'cpis/mainpage_s.html', context)
     except:
-        try:
-            if user.teacher:
-                position='教师端'
-        except:
-            position='管理员'
-    context={'user':user,'position':position,'isStudent':isStudent}
-    return render(request, 'cpis/mainpage.html', context)
-
-@login_required(login_url=settings.LOGIN_URL)
-def teacheradd(request):
-    course=Course.objects.all()
-    context={'course':course}
-    return render(request,'cpis/teacheradd.html',context)
-
-@login_required(login_url=settings.LOGIN_URL)
-def teacherview(request):
-    clsPractice = ClsPractice.objects.filter(teacher=request.user.teacher)
-    practices=[]
-    for item in clsPractice:
-        pratice={}
-        pratice['id']=item.id
-        pratice['course']=item.course.cname
-        pratice['chapter']=item.chapter
-        if PubPractice.objects.filter(clspractice=item):
-            pratice['stats']=True
-        else:
-            pratice['stats']=False
-        try:
-            pp=PubPractice.objects.get(clspractice=item)
-            if pp is not None:
-                forclasslist=pp.forclass[:-1].split(',')
-                cnames=''
-                for i in forclasslist:
-                    cname=Clazz.objects.get(id=i).scname
-                    cnames=cnames+cname+","
-            pratice['forclass']=cnames[:-1]
-        except Exception,e:
-            print e
-        
-        practices.append(pratice)
+        return render(request, 'cpis/mainpage_t.html', context)
     
-    teacher=request.user.teacher
-    clzzs=teacher.ct.all()
-    context={'practices':practices,'clzzs':clzzs}
-    return render(request,'cpis/teacherview.html',context)
-
-
 @csrf_exempt
 @login_required(login_url=settings.LOGIN_URL)
 def submitquestion(request):
@@ -154,33 +122,6 @@ def submitquestion(request):
     clsPractice.teacher=user.teacher
     clsPractice.save()
     return HttpResponse(json.dumps('200'),content_type="application/json")
-
-@login_required(login_url=settings.LOGIN_URL)
-def teacherviewdetail(request):
-    id=request.GET.get('id')
-    clsPractice=get_object_or_404(ClsPractice,id=id)
-    
-    choice_list=None
-    fill_list=None
-    judegement_list=None
-    choices=None
-    fills=None
-    judgements=None
-    if clsPractice.choice_id is not None:
-        choice_list=clsPractice.choice_id.split(',')
-        choices=Choice.objects.filter(id__in=choice_list)
-    if clsPractice.fill_id is not None:
-        fill_list=clsPractice.fill_id.split(',')
-        fills=Fill.objects.filter(id__in=fill_list)
-    if clsPractice.judgment_id is not None:
-        judegement_list=clsPractice.judgment_id.split(',')
-        judgements=Judge.objects.filter(id__in=judegement_list)
-
-    context={'ptatices_choice':choices,
-             'pratices_fill':fills,
-             'pratices_judgement':judgements}
-    
-    return render(request,'cpis/teacherviewdetail.html',context)
 
 @csrf_exempt
 @login_required(login_url=settings.LOGIN_URL)
@@ -391,25 +332,73 @@ def studentresult(request):
 def count(request):
     return HttpResponse('aaaa')
     
-#  for item in clsPractice:
-#         pratice={}
-#         pratice['id']=item.id
-#         pratice['course']=item.course.cname
-#         pratice['chapter']=item.chapter
-#         if item.choice_id:
-#             pratice['count_choice']=item.choice_id.count(',')+1
-#         else:
-#             pratice['count_choice']=0
-#         if item.fill_id:
-#             pratice['count_fill']=item.fill_id.count(',')+1
-#         else:
-#             pratice['count_fill']=0
-#         if item.judgment_id:
-#             pratice['count_judgment']=item.judgment_id.count(',')+1
-#         else:
-#             pratice['count_judgment']=0
-#         if PubPractice.objects.filter(clspractice=item):
-#             pratice['stats']=True
-#         else:
-#             pratice['stats']=False
-#         practices.append(pratice)
+
+def _lxlr(request):
+    '''系统录入返回所有课程的列表方便前端下拉框使用'''
+    course=Course.objects.all()
+    return {'course':course}
+
+def _lxgl(request):
+    '''练习管理:返回教师录入的所有练习信息列表'''
+    clsPractice = ClsPractice.objects.filter(teacher=request.user.teacher)
+    practices=[]
+    for item in clsPractice:
+        pratice={}
+        pratice['id']=item.id
+        pratice['course']=item.course.cname
+        pratice['chapter']=item.chapter
+        if PubPractice.objects.filter(clspractice=item):
+            pratice['stats']=True
+        else:
+            pratice['stats']=False
+        try:
+            pp=PubPractice.objects.get(clspractice=item)
+            if pp is not None:
+                forclasslist=pp.forclass[:-1].split(',')
+                cnames=''
+                for i in forclasslist:
+                    cname=Clazz.objects.get(id=i).scname
+                    cnames=cnames+cname+","
+            pratice['forclass']=cnames[:-1]
+        except Exception,e:
+            print e
+        
+        practices.append(pratice)
+    
+    teacher=request.user.teacher
+    clzzs=teacher.ct.all()
+    context={'practices':practices,'clzzs':clzzs}
+    return context
+
+def _praticedetail(request):
+    id=request.GET.get('id')
+    clsPractice=get_object_or_404(ClsPractice,id=id)
+    
+    choice_list=None
+    fill_list=None
+    judegement_list=None
+    choices=None
+    fills=None
+    judgements=None
+    if clsPractice.choice_id is not None:
+        choice_list=clsPractice.choice_id.split(',')
+        choices=Choice.objects.filter(id__in=choice_list)
+    if clsPractice.fill_id is not None:
+        fill_list=clsPractice.fill_id.split(',')
+        fills=Fill.objects.filter(id__in=fill_list)
+    if clsPractice.judgment_id is not None:
+        judegement_list=clsPractice.judgment_id.split(',')
+        judgements=Judge.objects.filter(id__in=judegement_list)
+
+    context={'ptatices_choice':choices,
+             'pratices_fill':fills,
+             'pratices_judgement':judgements}
+    return context
+
+def _sjtj(request):
+    return {}
+def _grzl(request):
+    return {}
+def _xgmm(request):
+    return {}
+

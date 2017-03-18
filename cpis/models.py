@@ -76,7 +76,7 @@ class ClsPractice(models.Model):
     choice_id=models.CharField('选择题集',max_length=50,null=True)
     fill_id=models.CharField('填空题集合',max_length=50,null=True)
     judgment_id=models.CharField('判断题集合',max_length=50,null=True)
-    publish_date=models.DateTimeField('发布日期',auto_now_add=True)
+    publish_date=models.DateTimeField('上传日期',auto_now_add=True)
     course=models.ForeignKey('Course',on_delete=models.CASCADE,verbose_name='所属课程')
     chapter=models.CharField('章节',max_length=20,null=True,blank=True)
     teacher=models.ForeignKey('Teacher',on_delete=models.CASCADE,verbose_name='教师')
