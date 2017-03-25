@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 from CPS import settings
-from cpis.models import Course, Choice, ClsPractice, PubPractice, Fill, Judge, \
+from cpis.models import Course, Choice, ClsPractice, Fill, Judge, \
     Teacher, Clazz, PracticeRecord
 
 

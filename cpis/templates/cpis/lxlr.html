@@ -1,22 +1,55 @@
+{%load staticfiles%}
+<link href="{% static 'cpis/css/lxlr.css' %}" rel="stylesheet" type="text/css"/>
+
 <div class="row">
-	<div class="col-sm-3">
-		<label for="form-field-select-1">练习分类</label>
-		<select class="form-control" id="form-field-select-1">
-			<option value="">&nbsp;</option>
-			{%if course%}
-			{%for item in course%}
-	   		<option value="{{item.id}}">{{item.cname}}</option>
-			{%endfor%}
-			{%endif%}								
-		</select>
+	<div class="col-xs-12">
+		<div class="row"><!--标题行  -->
+			<div class="col-xs-3">
+				<label for="form-field-select-1">练习分类</label>
+				<select class="form-control" id="form-field-select-1">
+				<option value="">&nbsp;</option>
+				{%if course%}
+				{%for item in course%}
+	   			<option value="{{item.id}}">{{item.cname}}</option>
+				{%endfor%}
+				{%endif%}								
+				</select>
+			</div>
+			<div class="col-xs-3">
+				<label class="" for="form-field-12">章节</label>
+				<input class="form-control zhangjie" placeholder="例如：第一章" id="zhangjie"></input>	
+			</div>
+		</div><!-- 标题行结束 -->
+		<div class="row"><!-- 具体题目行 -->
+        	<button class="btn-info" id="lxlr_dx">单项选择</button>     
+            <button class="btn-info" id="lxlr_tk">填空</button>
+		</div><!-- 具体题目行确定 -->
+		<div class="row lxlr_content" style="overflow: auto;height: 500px;"><!-- 具体题目行 -->
+			<div class="div_question">
+				<div class="div_preview">
+					<div class="div_question_all">
+						<div class="div_topic_question">1</div>
+						<div class="div_title_question">
+							<span>这是这个提的题干</span>
+							<span>这不是提干</span>
+						</div>
+						<div class="table_radio_question">
+							<ul>
+								<li><a href="###" class="jqRadio" style="position:static;"></a></li>
+								<label>这些是选项</label>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div>
+				</div>
+			</div>
+		</div><!-- 具体题目行确定 -->
+		
 	</div>
-    <div class="col-sm-3">
-		<label class="" for="form-field-12">章节</label>
-		<input class="form-control zhangjie" placeholder="例如：第一章" id="zhangjie"></input>	
-   </div>
 </div>
 
-<h3>一.选择题</h3>
+
 <div class="row xz" id="s0">
 <form class="form-horizontal" role="form" action="#">
 	<div class="form-group">
@@ -167,6 +200,15 @@
 <button class="btn btn-lg btn-success" value="submit">
 	<i class="icon-ok"></i>提交
 </button>
+
+
+<script type="text/javascript">
+	jQuery(function($){
+		$("#lxlr_dx").click(function(){
+			alert("aaa");
+		});
+	});
+</script>
 
 <script type="text/javascript">
 		jQuery(function($) {

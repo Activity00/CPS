@@ -1,10 +1,7 @@
 #-*-coding:utf-8-*-
 
-import datetime
-
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils import timezone
 
 
 class Student(models.Model):
@@ -21,7 +18,8 @@ class Student(models.Model):
     class Meta:                               #描述类，相当于标题
         verbose_name = '学生'
         verbose_name_plural='学生表'
-        
+
+
 class Clazz(models.Model):
     '''班级'''
     scname=models.CharField('班级名称',max_length=20,unique=True)
@@ -73,48 +71,24 @@ class Course(models.Model):
         
 class ClsPractice(models.Model):
     '''课堂练习'''
-    choice_id=models.CharField('选择题集',max_length=50,null=True)
-    fill_id=models.CharField('填空题集合',max_length=50,null=True)
-    judgment_id=models.CharField('判断题集合',max_length=50,null=True)
-    publish_date=models.DateTimeField('上传日期',auto_now_add=True)
+    tm_ids=models.CharField('题目编号集合',max_length=500)
+    upload_date=models.DateTimeField('上传日期',auto_now_add=True)
     course=models.ForeignKey('Course',on_delete=models.CASCADE,verbose_name='所属课程')
     chapter=models.CharField('章节',max_length=20,null=True,blank=True)
     teacher=models.ForeignKey('Teacher',on_delete=models.CASCADE,verbose_name='教师')
-    
+    #状态信息：是否发布、针对班级、经纬度
+    stat_info=models.CharField('状态信息',max_length=500)
     class Meta:
         verbose_name = '课堂练习'
         verbose_name_plural='课堂练习表'
 
-class PubPractice(models.Model):
-    '''发布练习'''
-    clspractice=models.ForeignKey('ClsPractice',on_delete=models.CASCADE,verbose_name='课堂练习')
-    forclass=models.CharField('针对班级',max_length=20,default='')#可针对多个班级
-    publish_date=models.DateTimeField('发布日期',auto_now_add=True)
-    practice_time=models.IntegerField('练习时间')
-    teacher=models.ForeignKey('Teacher',on_delete=models.CASCADE,verbose_name='教师')
-    sata=models.SmallIntegerField('状态')
-    publish_loc=models.CharField('发布地点经纬度',max_length=100)
-    
-    def validpratice(self):
-        now = timezone.now()
-        end= self.publish_date+datetime.timedelta(minutes=self.practice_time)
-        if (end-now)>datetime.timedelta(minutes=0):
-            return self.id
-        else:
-            return None
-   
-    class Meta:
-        verbose_name = '发布练习'
-        verbose_name_plural='发布练习表'
-    
+  
 class PracticeRecord(models.Model):
-    '''联系记录'''
+    '''练习记录'''
     sno=models.ForeignKey('Student',on_delete=models.CASCADE,verbose_name='学生编号')
     clspratice=models.ForeignKey('ClsPractice',on_delete=models.CASCADE,verbose_name='课堂练习',null=True,blank=True)
-    costtime=models.IntegerField('练习时间')
-    hesitateinfo=models.CharField('犹豫信息',max_length=100)
-    errorinfo=models.CharField('错误信息',max_length=5128)
-    position=models.CharField('答题人经纬度',max_length=100)
+    #包括时间地理位置、犹豫信息、经纬度等等。
+    info=models.CharField('记录信息',max_length=512)
     def __unicode__(self):
         return super(self)
     def __str__(self):
@@ -122,21 +96,18 @@ class PracticeRecord(models.Model):
     class Meta:
         verbose_name = '答题记录'
         verbose_name_plural='答题记录表'
+
 class Choice(models.Model):
     '''选择题'''
-    topic=models.CharField('题目',max_length=100,null=False,unique=True)
-    optiona=models.CharField('选项a',max_length=50)
-    optionb=models.CharField('选项b',max_length=50)
-    optionc=models.CharField('选项c',max_length=50,null=True,blank=True)
-    optiond=models.CharField('选项d',max_length=50,null=True,blank=True)
-    optione=models.CharField('选项e',max_length=50,null=True,blank=True)
-    correctanswer=models.CharField('正确选项',max_length=1)
+    topic=models.CharField('题目',max_length=100)   
+    option=models.CharField('选项集合',max_length=1024)
+    correctanswer=models.CharField('正确选项集合',max_length=20)
     correctrate=models.IntegerField('正确率',null=True,blank=True)
     difficulty=models.IntegerField('难易系数',null=True,blank=True)
     analysis=models.CharField('解析',max_length=100,null=True,blank=True)
     knowledgepoint=models.CharField('知识点',max_length=30,null=True,blank=True)
-    date=models.DateTimeField('发布日期',auto_now_add=True)
-    course=models.CharField('所属课程',max_length=50,null=True,blank=True)
+    date=models.DateTimeField('发布日期时间',auto_now_add=True)
+    course=models.ForeignKey('Course',verbose_name='所属课程')
     
     def __unicode__(self):
         return self.topic
@@ -148,14 +119,14 @@ class Choice(models.Model):
         
 class Fill(models.Model):
     '''填空题'''
-    topic=models.CharField('题目',max_length=100,null=False,unique=True)
-    correctanswer=models.CharField('正确答案',max_length=20)
+    topic=models.CharField('题目',max_length=100)
+    correctanswer=models.CharField('正确答案',max_length=50)
     correctrate=models.IntegerField('正确率',null=True,blank=True)
     difficulty=models.IntegerField('难易系数',null=True,blank=True)
     analysis=models.CharField('解析',max_length=100,null=True,blank=True)
     knowledgepoint=models.CharField('知识点',max_length=30,null=True,blank=True)
     date=models.DateTimeField('发布日期',auto_now_add=True)
-    course=models.CharField('所属课程',max_length=50,null=True,blank=True)    
+    course=models.ForeignKey('Course',verbose_name='所属课程')    
     def __unicode__(self):
         return self.topic
     def __str__(self):
@@ -166,14 +137,14 @@ class Fill(models.Model):
     
 class Judge(models.Model):
     '''判断题'''
-    topic=models.CharField('题目',max_length=100,null=False,unique=True)
+    topic=models.CharField('题目',max_length=100)
     correctanswer=models.BooleanField('正确答案')
     correctrate=models.IntegerField('正确率',null=True,blank=True)
     difficulty=models.IntegerField('难易系数',null=True,blank=True)
     analysis=models.CharField('解析',max_length=100,null=True,blank=True)
     knowledgepoint=models.CharField('知识点',max_length=30,null=True,blank=True)
     date=models.DateTimeField('发布日期',auto_now_add=True)
-    course=models.CharField('所属课程',max_length=50,null=True,blank=True)    
+    course=models.ForeignKey('Course',verbose_name='所属课程')
     
     def __unicode__(self):
         return self.topic
