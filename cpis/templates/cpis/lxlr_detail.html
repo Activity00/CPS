@@ -1,0 +1,427 @@
+{%load staticfiles%}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>正在加载练习......</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10"/>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link href="{%static 'cpis/css/NewDefault.css'%}?v=11" rel="stylesheet" type="text/css" />
+    <link id="linkBaseUrl" rel="stylesheet" type="text/css" href="{%static 'cpis/css/q_16px.css'%}?v=10"></link> 
+    <link href="{%static 'cpis/css/designnew.css' %}?v=3" rel="stylesheet" type="text/css" />   
+    <script type="text/javascript" src="{%static 'cpis/Js/zhezhao.js'%}?v=1"></script>
+</head>
+<body style="background: #eeeeee; margin: 0px; padding: 0px;">
+    <div id="ss-header">
+        <div id="divMenu">    
+                <div style="display: none;"><a href="javascript:void(0);" onclick="save_paper('edit',true);"><span><strong>保存</strong></span></a>(<input
+                    id="chkAutoSave" type="checkbox" checked="checked" onclick="chkAutoSave_Click(this);" />自动保存) </div>
+                <div style="margin-right: 25px;float:left;"><a href="#" style="padding-left: 15px; padding-right: 15px;" onclick="return save_paper('pub',true);" class="sumitbutton" id="hrefFiQ">完成编辑</a></div>
+                <div style="float:left;"><a href="/jq/13330584.aspx?wg=1" onclick="return save_paper('preview',true,true);" class="preview" target="_blank"><i class="design-icon design-preview"></i>预览</a></div>
+
+            <div style="float: right;padding-right:20px;">
+                <a href="javascript:" onclick="initPageQuestionRandom();return false;"><span id="spanRandom" style="vertical-align: middle;">题目随机设置</span></a>
+                <span style="vertical-align: middle;font-size: 16px; color: #fff; display:inline-block; margin-left:15px;">
+                    <input class="checkbox" type="checkbox" id="chkUseSelfTopic" style="vertical-align: middle;" /><label for="chkUseSelfTopic">隐藏系统题号</label>
+                </span>
+            </div>
+        </div> 
+    </div>
+    <input name="hfData" type="hidden" id="hfData" value="测试§§0§0§0§true§false§0¤page§1§§§§§¤cut§放大师傅§§¤radio§1§请在此输入问题标题〒〒〒§0§1〒§false§false§0§true§§§0§§§选项9〒false〒1〒0〒〒〒〒〒〒§选项10〒false〒2〒0〒〒〒〒〒〒" />
+    <div style="margin: 0 auto; text-align: left;width:1000px;position:relative;">
+        <div id="topnav" style="visibility: hidden;">
+            <ul class="tabQTypet">
+                <li><a id="hrefChoice" href="javascript:" onclick="createFreQ('radio');return false;"><i class="design-icon design-qtype design-radio"></i>单选</a></li>
+                <li><a href="javascript:" onclick="createFreQ('check');return false;"><i class="design-icon design-qtype design-check"></i>多选</a></li>
+                <li><a href="javascript:" onclick="createFreQ('question');return false;" onmouseout="sb_setmenunav('divText', false,this)"
+                    onmouseover="sb_setmenunav('divText', true,this)" qtype="1"><i class="design-icon design-qtype design-text"></i>填空</a></li>
+                <li><a href="javascript:" onclick="createFreQ('matrix',101);return false;" onmouseout="sb_setmenunav('divqMatrix', false,this)"
+                    onmouseover="sb_setmenunav('divqMatrix', true,this)" qtype="3"><i class="design-icon design-qtype design-juzhen"></i>矩阵</a></li>
+                <li style="width:94px;"><a href="javascript:void(0);" onclick="createFreQ('fileupload');return false;"><i class="design-icon design-qtype design-upload"></i>上传文件</a></li>
+                <li><a href="javascript:" onclick="createFreQ('likert');return false;" onmouseout="sb_setmenunav('divScore', false,this);"
+                    onmouseover="sb_setmenunav('divScore', true,this);" qtype="3" id="hrefCp"><i class="design-icon design-qtype design-likert"></i>评分</a></li>
+                <li><a href="###" onmouseout="sb_setmenunav('divTest', false,this);"
+                    onmouseover="sb_setmenunav('divTest', true,this);" qtype="1" id="hrefqKs"><i class="design-icon design-qtype design-exam"></i>考试</a></li>
+                <li><a href="javascript:" onclick="createFreQ('toupiao',1);return false;" onmouseout="sb_setmenunav('divTouPiao', false,this);"
+                    onmouseover="sb_setmenunav('divTouPiao', true,this);" qtype="2" id="hrefTouPiao"><i class="design-icon design-qtype design-toupiao"></i>投票</a></li>
+                <li><a href="javascript:" onclick="createFreQ('page');return false;"><i class="design-icon design-qtype design-page"></i>分页</a></li>
+                <li style="width:95px;"><a href="javascript:" onclick="createFreQ('cut');return false;"><i class="design-icon design-qtype design-cut"></i>段落说明</a></li>
+                <li><a href="javascript:;" onclick="createFreQ('check','','1');return false;"><i class="design-icon design-qtype design-sort"></i>排序</a></li>
+                <li  style="width:95px;"><a href="###" onmouseover="sb_setmenunav('moretype',true,this);"
+                    onmouseout="sb_setmenunav('moretype',false,this);" qtype="1"><i class="design-icon design-qtype design-high"></i>高级题型</a></li>
+                <li id="liAll" style="width:95px;"><a href="###" onmouseover="sb_setmenunav('qType',true,this);"
+                    onmouseout="sb_setmenunav('qType',false,this);" qtype="1" id="hrefInfo" style="border-right:none;"><i class="design-icon design-qtype design-info"></i>个人信息</a></li>
+                <div style="clear:both;"></div>
+            </ul>
+            <div id="m-rightbar">
+                <div class="m-menu">
+                    <li class="m-top"><a href="javascript:;" onclick="gotop();return false;" title="返回顶部">返回顶部</a></li>
+                    <li class="m-help"><a href="/help/help.aspx?catid=65&h=1" title="帮助中心" target="_blank">帮助中心</a></li>
+                    <li class="m-comment"><a href="/jq/3779891.aspx" title="意见反馈" target="_blank">意见反馈</a></li>
+                    <li class="m-bottom"><a href="javascript:;" onclick="gobottom();return false;" title="返回底部">返回底部</a></li>
+                </div>
+            </div>
+            <div style="position: absolute; left:-49px; top:10px;" id="divNewTip">
+                <img src="{%static 'cpis/images/design/addxtpic.gif'%}" alt="">
+            </div>
+        </div>
+        <div class="survey" style="padding-bottom:5px;margin:0; overflow: auto;background: #ffffff;width:1000px;margin-right:26px;" id="sur">
+            <div style="width:840px;margin: 0 auto;">
+                <div id="question" class="surveycontent">
+                    <div id="divId" class="surveyhead" style="border: 2px solid #ffffff; margin-top:18px;
+                        width:800px; cursor: pointer;padding-top:10px;padding-bottom:10px;" title="编辑问卷标题与问卷说明">
+                        <h1 id="pater_title" style="cursor: pointer;">
+                            正在加载问卷...</h1>
+                        <div id="pater_desc" class="surveydescription" style="cursor: pointer;">
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both;">
+                </div>
+            </div>
+            <div id="divbatchq" style="display:none; margin:20px auto 20px; width:220px;">
+             <a href="###" class="sumitbutton cancle" style="height:35px; line-height:35px; width:200px; text-align:center;">批量添加题目</a>
+            </div>
+        </div>
+        <div id="status_tip" style="height: auto;">
+        </div> 
+    </div>
+   
+    <div id="toolTipLayer" style="position: absolute; display: none; line-height: 20px; width: 250px; background: #fffaea;
+        text-align: left; box-shadow:1px 2px 5px #C3C9D0;border-radius:2px; border:1px solid #FFCD00; z-index: 20000; overflow:auto; padding:5px 8px;color:#222; font-size:13px;">
+    </div>
+     <div id="batchDeleteMenu" style="position: absolute; display: none; border-radius:2px;width:50px; border:1px solid #85c449;background:#eff9fe; z-index: 20000; overflow:auto; padding:5px 4px;color:#222;">
+    </div>
+    <div id="divQAttr" style="width:600px; text-align: left; display: none;">
+        <div style="padding: 10px 0 0 10px; margin: 0px; background:#fff; font-size:14px;">
+            <table>
+                <tr>
+                    <td>
+                        <strong>问卷标题：</strong>
+                    </td>
+                    <td>
+                        <input id="paper_attr_title" onblur="paper_attr_title_onblur(this);" type="text" value="请输入您的问卷的标题" style="border: 1px solid #dadada; line-height: 22px; width:494px; height: 22px; padding: 0 2px; font-size: 14px;" maxlength="100" />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle">
+                        <strong>问卷说明：</strong>
+                    </td>
+                    <td>
+                        <textarea id="paper_attr_desc" onblur="paper_attr_desc_onblur(this);" rows="10" title="在此输入问卷说明，可以使用HTML格式插入图片或者音乐，Google地图等"></textarea><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div style="color: Red;">提示：问卷说明不能超过4000个字符<span id="spanDTip" style="display: none;">，已经输入<span id="spanHInput"></span>字符,还可以输入<span id="spanLeftInput"></span>字符</span></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="text-align: center; margin-top: 10px;">
+           <a href="javascript:;" onclick="window.parent.PDF_close();return false;" class="sumitbutton">确定</a>
+        </div>
+    </div>
+    <div id="divText" class="sidebarbox" style="display: none;width:90px;">
+         <em></em><span></span>
+        <ul class="sidebarlistb">
+            <li><a href="javascript:void(0);" onclick="createFreQ('question');return false;" style="width:75px">单项填空</a></li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('gapfill');return false;" style="width:75px">多项填空</a></li>
+             <li><a href="javascript:void(0);" onclick="createFreQ('matrix',201);return false;" style="width:75px">矩阵填空</a></li>
+        </ul>
+    </div>
+     <div id="divqMatrix" class="sidebarbox" style="display: none;">
+       <em style="left:90px;"></em><span style="left:90px;"></span>
+        <div style="font-size:14px;color:#58595b;">矩阵题的每行是一个小问题</div>
+        <ul class="sidebarlistb">
+            <li><a href="javascript:void(0);" onclick="createFreQ('matrix',101);return false;" title="可以设置分数">矩阵量表</a></li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('matrix',103);return false;">矩阵单选</a></li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('matrix',102);return false;">矩阵多选</a></li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('matrix',201);return false;">矩阵填空</a></li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('matrix',202);return false;">矩阵滑动条</a></li>
+            <li><a href="javascript:void(0);" onclick="if(checkPermission(2)) createFreQ('matrix','303'); return false;">表格下拉框</a></li>
+             <li><a href="javascript:void(0);" onclick="if(checkPermission(2)) createFreQ('matrix','301'); return false;">表格数值题</a></li>
+              <li><a href="javascript:void(0);" onclick="if(checkPermission(2)) createFreQ('matrix','302'); return false;">表格文本题</a></li>
+        </ul>
+         <div style="font-size:14px;color:#58595b;display:none;" id="divYingYong"><b>360测评</b>需要使用引用逻辑，<a href="/help/help.aspx?helpid=348&h=1" class="link-U00a6e6" target="_blank">查看帮助</a></div>
+    </div>
+     <div id="divScore" class="sidebarbox" style="display: none;width:140px;">
+        <em style="left:70px;"></em><span style="left:70px;"></span>
+        <div style="font-size:14px;color:#58595b;">
+            可设置<b>每个选项的分数</b><br />
+            适合满意度调查与测评
+        </div>
+        <ul class="sidebarlistb">
+            <li><a href="javascript:void(0);" onclick="createFreQ('likert');return false;" style="width:120px">量表题</a></li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('ceping',1);return false;" style="width:120px">评分单选</a> </li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('ceping',2);return false;" style="width:120px">评分多选</a> </li>
+            <li><a href="javascript:void(0);" onclick="createFreQ('matrix',101);return false;"  style="width:120px">矩阵量表</a></li>
+        </ul>
+    </div>
+    <div id="divTest" class="sidebarbox" style="display: none;width:458px;">
+        <em style="left:229px;"></em><span style="left:229px;"></span>
+        <div style="font-weight:bold; font-size:14px; text-align:left;color:#000; padding-left:5px; clear:both;margin-bottom:5px;">添加题目：<a href="/help/help.aspx?helpid=251&h=1" target="_blank"><i class="design-icon design-qmark"></i></a>
+        </div>
+        <ul style="clear:both;" class="sidebarlistb">
+            <li><a href="javascript:void(0);" onclick="if(checkPermission(6)) createFreQ('ceshi',1);return false;" style="width:38px">
+                单选</a></li>
+            <li><a href="javascript:void(0);" onclick="if(checkPermission(6)) createFreQ('ceshi',5);return false;" style="width:38px">
+                判断</a></li>
+            <li><a href="javascript:void(0);" onclick="if(checkPermission(6)) createFreQ('ceshi',2);return false;" style="width:38px">
+                多选</a></li>
+             <li><a href="javascript:void(0);" onclick="if(checkPermission(6)) createFreQ('ceshi',3);return false;" style="width:58px">
+                单项填空</a></li>
+             <li><a href="javascript:void(0);" onclick="if(checkPermission(4)) createFreQ('ceshi',4);return false;" style="width:58px">
+                多项填空</a></li>
+            <li><a href="javascript:void(0);" onclick="if(checkPermission(5)) createFreQ('ceshi',6);return false;" style="width:38px">
+                简答</a></li>
+            <li><a href="javascript:void(0);" onclick="if(checkPermission(6)) PDF_launch('addbatchq.aspx?ks=1',620,450,null,'批量添加考试题');return false;" style="width:60px;height:23px;line-height:23px;" class="badd">
+                批量添加</a></li>
+        </ul>
+         <ul style="padding-top:3px;clear:both; text-align:left;" class="sidebarlistb">
+           <li class="info"> <a href="javascript:" onclick="createFreQ('姓名');return false;"  style="width:40px;">姓名</a></li>
+           <li class="info"> <a href="javascript:" onclick="createFreQ('基本信息');return false;"  style="width:90px;">基本信息</a></li>
+         </ul>
+        <ul style="padding-top:15px;clear:both; text-align:left; margin-left:5px;font-size:14px;" class="sidebarlistb">
+            <div style="float:left;">
+               <b style="color:#000;">功能设置：</b>
+                <a href="javascript:" onclick="setTikuRandom();return false;" class="titlelnk" style="font-weight: bold;">
+                    题库随机设置</a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:" class="titlelnk" style="font-weight: bold;"
+                        onclick="PDF_launch('/wjx/design/settime.aspx?activity=13330584',600,300,null,'考试时间设置');return false;">
+                        考试时间设置</a>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="chkUseTopic" /><label for="chkUseTopic">隐藏系统题号</label>
+            </div>
+            <div style="float:right; padding-right:10px;">
+              
+            </div>
+            <div class="divclear"></div>
+        </ul>
+    </div>
+  
+    <div id="divTouPiao" class="sidebarbox" style="display: none;width:90px;">
+        <em></em><span></span>
+        <ul class="sidebarlistb">
+              <li><a href="javascript:void(0);" onclick="createFreQ('toupiao',1);return false;">投票单选</a></li>
+            <li><a href="javascript:void(0);"  onclick="createFreQ('toupiao',2);return false;">投票多选</a></li>
+        </ul>
+    </div>
+    <div id="moretype" class="sidebarbox" style="display: none;width:180px;">
+         <em style="left:90px;"></em><span style="left:90px;"></span>
+          <ul class="sidebarlistb">
+                        
+                        <li><a href="javascript:void(0);" onclick="createFreQ('sum');return false;">比重题</a></li>
+                        <li><a href="javascript:void(0);" onclick="createFreQ('slider');return false;">滑动条</a></li>
+                        <li><a href="javascript:void(0);" onclick="if(checkPermission(3))createFreQ('qingjing');return false;">情景随机</a></li>
+                       
+                        <li><a href="javascript:void(0);" onclick="createFreQ('shop');return false;">商品题型</a></li>
+                        <li><a href="javascript:" onclick="createFreQ('radio_down');return false;">下拉单选</a></li>
+                         <li><a href="javascript:" onclick="createFreQ('多级下拉');return false;" title="多级下拉框进行联动" >多级下拉</a></li>
+                    </ul>
+    </div>
+    <div id="qType" class="sidebarbox" style="display: none;width:450px;">
+       <em style="left:225px;"></em><span style="left:225px;"></span>
+        <ul class="sidebarlistb">
+            <li><a href="javascript:" onclick="createFreQ('姓名');return false;">姓名</a></li>
+            <li><a href="javascript:" onclick="createFreQ('性别');return false;">性别</a></li>
+            <li><a href="javascript:" onclick="createFreQ('年龄段');return false;">年龄段</a></li>
+            <li><a href="javascript:" onclick="createFreQ('省份');return false;">省份</a></li>
+            <li><a href="javascript:" onclick="createFreQ('城市单选');return false;">省市</a></li>
+            <li><a href="javascript:" onclick="createFreQ('省市区');return false;">省市区</a></li>
+            <li><a href="javascript:" onclick="createFreQ('手机');return false;">手机</a></li>
+            <li><a href="javascript:" onclick="createFreQ('手机验证');return false;">手机验证</a></li>
+            <li><a href="javascript:" onclick="createFreQ('Email');return false;">Email</a></li>
+            <li><a href="javascript:" onclick="createFreQ('日期');return false;">日期</a></li>
+             <li><a href="javascript:" onclick="createFreQ('时间');return false;">时间</a></li>
+            <li><a href="javascript:" onclick="createFreQ('地图');return false;">地图</a></li>
+            <li><a href="javascript:" onclick="createFreQ('职业');return false;">职业</a></li>
+            <li><a href="javascript:" onclick="createFreQ('行业');return false;">行业</a></li>
+            <li><a href="javascript:" onclick="createFreQ('高校');return false;">高校</a></li>
+            <li><a href="javascript:" onclick="createFreQ('邮寄地址');return false;">邮寄地址</a></li>
+            
+        </ul>
+    </div>
+   
+    <div style="display: none;" id="divTitleEditor">
+        <div style="margin: 10px;">
+            <textarea style="width:594px; height:260px;" id="textTitleId"></textarea>
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input  class="finish" type="button"
+                value=" 保 存 " onclick="clickOK();"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="finish cancle" type="button" value=" 取 消 " onclick="clickCancel();"/></div>
+    </div>
+    <div style="display: none;" id="divUpgradeVip">
+        <div style="margin: 30px 0 0 20px;">
+            <div id="divUpTip">
+            </div>
+            <div style="margin-top: 15px;">
+                <a href="javascript: save_paper('upgrade', true);" class="btnbgbig"><span>立即升级</span></a>
+            </div>
+            <div id="divHighSchool"></div>
+        </div>
+    </div>
+    <div style="display:none;" id="divDesignStart">
+        <div style="margin:0px 0 10px 10px; position:relative;">
+           <div style="overflow:auto;"><img id="imgStart" alt="" width="700" height="670" /></div>
+           <div style="margin-top:10px;">
+              <a href="javascript:" onclick="PDF_close();return false;" class="sumitbutton" id="hrefsEdit">立即开始编辑问卷</a>
+           </div>
+        </div>
+    </div>
+    <div id="divDescPop" style="display: none;">
+        <div style="padding: 10px;overflow: auto;text-align:left;font-size:14px;" id="divDescPopData"></div>
+    </div>
+    <input name="hfKeyword" type="hidden" id="hfKeyword" value="%e7%99%bd%e7%b2%89%7c%e6%af%92%e8%8d%af%7c%e7%82%b8%e5%bc%b9%7c%e9%b8%a6%e7%89%87%7c%e6%b5%b7%e6%b4%9b%e5%9b%a0%7c%e7%bf%bb%e5%a2%99%7c%e6%80%a7%e4%ba%a4%7c%e6%96%87%e9%9d%a9%7cfuck%7ck%e7%b2%89%7c%e6%af%9b%e7%89%87%7c%e7%bb%9f%e7%8b%ac%7c%e5%8f%b0%e7%8b%ac%7c%e6%b3%95%e8%bd%ae%7c%e6%89%93%e7%82%ae%7c%e5%88%86%e4%ba%ab%e8%87%b3%e6%9c%8b%e5%8f%8b%e5%9c%88%7c%e5%88%86%e4%ba%ab%e5%88%b0%e6%9c%8b%e5%8f%8b%e5%9c%88%7c%e9%9b%86%e8%b5%9e%7c%e6%9e%aa%7c%e6%89%93%e7%a0%b8%7c%e6%96%87%e5%8c%96%e5%a4%a7%e9%9d%a9%e5%91%bd" />
+    <script type="text/javascript">
+        $ = function (element) {
+            return (typeof (element) == 'object' ? element : document.getElementById(element));
+        };
+         function gotop(){
+            var divSur=document.getElementById("sur");
+            divSur.scrollTop=0;
+        }
+         function gobottom(){
+            var divSur=document.getElementById("sur");
+            divSur.scrollTop=divSur.scrollHeight;
+        }
+         var toolTipLayer = $("toolTipLayer");
+         var batchDeleteMenu=$("batchDeleteMenu");
+         var filterKeyword=decodeURIComponent( document.getElementById("hfKeyword").value);
+
+        var bodyWidth = document.documentElement.clientWidth || document.body.clientWidth;
+        var vipUser = "";var proUser=0;
+        var activityID = "13330584";
+        var parActivityId= "13330584";
+        var isTiyan = "";
+        var hfData = $("hfData");
+        var serverVersion = '7';
+        var osa = '';
+        var startqDate="2017/4/13 15:11:00";
+        var editOldQ="false";
+        var sguid="";
+        var langver=0;
+        var BaseCssUrl="q_16px.css";
+        var HasCustomerCss="False";
+        var uploadQiuniu=2;
+        hfData.value=startqDate + "§" + hfData.value + "œ" + editOldQ + "§" + sguid + "§" + langver + "§" + BaseCssUrl + "§" + HasCustomerCss + "§null";
+        if(osa==1){
+          var hrefFiQ=$("hrefFiQ");
+          hrefFiQ.innerHTML="完成编辑并运行";
+          hrefFiQ.onclick=function(){
+            return save_paper('pub2',true);
+          }
+        }
+        var NoValueData=-77777;
+        var fileMaxSize=10240;
+        var isPromote=0;
+        var smsBalance=0;
+        var newQType=0;
+        if(newQType==5)
+            document.getElementById("divYingYong").style.display="";
+        var hasAlertKs=false;var hasAlertGapFill=false;var hasAlertJianDa=false;
+        function checkPermission(type) {
+            if (!vipUser) {
+                var addFirst="\r\n您现在可以先添加好题目，升级后问卷才能发布！";
+                var kaiShiTip="考试题型需要购买后才能正常发布，您可以先进行添加试用";
+                if(type==2){
+                  if(!proUser)
+                      alert('只有企业版用户才能使用表格题，请升级！'+addFirst);
+                  return true;
+                }
+                else if(type==3){
+                    alert('只有企业版用户才能使用情景随机题，请升级！'+addFirst);
+                   return true;
+                }
+                else if(type==4){
+                    if(!payKaoShi && !hasAlertGapFill){
+                        alert('只有企业版用户才能使用考试多项填空题，请升级！'+addFirst);
+                        hasAlertGapFill=true;
+                    }
+                    else  if(payKaoShi==2 && !hasAlertKs){
+                        alert(kaiShiTip);
+                        hasAlertKs=true;
+                    }
+                    return true;
+                }
+                else if(type==5){
+                    if(!payKaoShi && !hasAlertJianDa){
+                        alert('只有企业版用户才能使用考试简答题，请升级！'+addFirst);
+                        hasAlertJianDa=true;
+                    }
+                    else  if(payKaoShi==2 && !hasAlertKs){
+                        alert(kaiShiTip);
+                        hasAlertKs=true;
+                    }
+                    return true;
+                }
+                else if(type==6){
+                    if(payKaoShi==2 && !hasAlertKs){
+                        alert(kaiShiTip);
+                        hasAlertKs=true;
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else
+                return true;
+        }
+        var isTiKu=0;
+        var tikuId=0;
+        var isCepingQ=0;
+        var isKaoShi=0;
+         var filter = 1?true:false;
+         var starttimer=null;
+         var needToolTip=0;
+        var topnav=document.getElementById("topnav");
+        var payKaoShi=0;
+        window.onload=function(){
+            var divNewTip=$("divNewTip");
+            var imgSrcs=["divTest","divTouPiao","qType","","divScore"];
+            var ids=["hrefqKs","hrefTouPiao","hrefInfo","","hrefCp"];
+            if(newQType==2||newQType==3||newQType==4||newQType==6){
+                var index=newQType-2;
+                imgSrc=imgSrcs[index];
+                var obj=$(ids[index]);
+                obj.className="hover";
+                sb_setmenunav(imgSrcs[index],true,obj);
+            }
+            if(!needToolTip)
+                return;
+            return;
+            var bodyHeight = document.documentElement.clientHeight || document.body.clientHeight;
+            var imgStart=document.getElementById("imgStart");
+            var divMenu=document.getElementById("divMenu");
+            
+            topnav.style.display="none";
+            divMenu.style.display="none";
+            var showimg="designstart.gif";
+            var showtime=22;
+            if(needToolTip==2){ 
+              showimg="kaoshi.png";showtime=8;
+              $("hrefsEdit").innerHTML="立即开始创建考试问卷";
+            }
+            var theight=722;
+            if(bodyHeight-80<722){
+               theight=bodyHeight-80;
+               imgStart.parentNode.style.height=(theight-52)+"px";
+            }
+            imgStart.src="/images/"+showimg+"?t="+new Date().valueOf();
+            PDF_launch("divDesignStart",730,theight,function(){
+               topnav.style.display="";divMenu.style.display="";
+            },"no");
+            starttimer=setTimeout(function(){
+              PDF_close();
+            },showtime*1000);
+         }
+    </script>
+    <script type="text/javascript">
+        document.write('<script type="text/javascript" language="javascript"' + ' src="{%static "cpis/Js/hintinfo.js"%}?v=2"><' + '/script>');
+        document.write('<script type="text/javascript" language="javascript"' + ' src="{%static "cpis/Js/design_new.js"%}?v=55"><' + '/script>');
+        try {
+            document.execCommand("BackgroundImageCache", false, true);
+        } catch (ex) { };
+    </script>
+    <!-- <div style="display:none;"><script src="https://s13.cnzz.com/z_stat.php?id=4478442&web_id=4478442" language="JavaScript"></script></div> -->
+</body>
+</html>

@@ -32,7 +32,7 @@ def login(request):
         return HttpResponseRedirect('/cpis?message=verify_error')
     else:
         if user.is_active:#登陆
-            auth.login(request,user)
+            auth.login(request,user)        
             response=HttpResponseRedirect('/cpis/mainpage')
             return response
         else:
@@ -67,6 +67,16 @@ def mainPage(request):
             return render(request, 'cpis/mainpage_s.html', context)
     except:
         return render(request, 'cpis/mainpage_t.html', context)
+
+@login_required(login_url=settings.LOGIN_URL)
+def createexercise(request):
+    exercise_id=request.POST.get('lxfl')
+    exercise_name=request.POST.get('lxmc')
+    if not exercise_id  or not exercise_name:
+        #提交表单出错、转到错误页面(前端校验合理的情况下不会出像这样情况)
+        raise Http404()
+    #练习填写页面
+    return render(request, 'cpis/lxlr_detail.html', context=None)
     
 @csrf_exempt
 @login_required(login_url=settings.LOGIN_URL)

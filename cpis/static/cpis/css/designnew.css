@@ -1,0 +1,545 @@
+ #ss-header {
+background:#888;
+padding:15px 0 15px;width:100%;
+}
+#divMenu
+{ 
+width:1000px;  visibility:hidden; margin:0 auto; height:28px;
+}
+#divMenu a,#divMenu a:visited
+{
+ color:#fff;font-size:16px;
+}
+#divMenu  a:hover 
+{
+color:#FF0;
+}
+#topnav
+{
+    margin-top:15px;
+}
+.sidebarbox {
+    width: 180px;
+    border: 1px solid #bad9f2;
+    border-radius: 4px;
+    position: absolute;
+    background: #eff9fe;
+    padding: 10px;
+    left: 175px;
+    top: 130px;
+    z-index: 99;
+}
+.sidebarbox em {
+    display: block;
+    border-width: 10px;
+    position: absolute;
+    top: -18px;
+    left: 45px;
+    border-style: dashed dashed solid dashed;
+    border-color: transparent transparent #bad9f2 transparent;
+    font-size: 0;
+    line-height: 0;
+}
+.sidebarbox span {
+    display: block;
+    border-width: 10px;
+    position: absolute;
+    top: -18px;
+    left:45px;
+    border-style: dashed dashed solid dashed;
+    border-color: transparent transparent #eff9fe transparent;
+    font-size: 0;
+    line-height: 0;
+}
+.sidebarlistb li {
+    float: left;
+    padding: 0;
+    border: 0;
+    background: none;
+    margin: 3px 5px;
+}
+.sidebarlistb li a {
+    float: left;
+    line-height: 23px;
+    height: 23px;
+    text-align: center;
+   background: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 3px;
+    color: #333;
+    border:1px solid #adadad;
+    width: 71px;
+    text-decoration: none;
+}
+    .sidebarlistb li a:hover {
+        background: #0095da;
+        color:#fff;
+        border:1px solid #0095da;
+    }
+.sidebarlistb li a.badd, .sidebarlistb li a.badd:visited {
+    color:#ff6600;
+}
+    .sidebarlistb li a.badd:hover {
+        color:#fff;
+    }
+.sidebarlistb li.info a {
+    background:#dff4ff;
+    color:#529214;
+    border:1px solid #529214;
+}
+.sidebarlistb li.info a:hover {
+    color:#fff;background: #0095da;
+}
+.div_title_attr_question  {
+    background:none repeat scroll 0 0 #eff9fe;
+    margin:10px 0;
+    border:0;
+    padding-top:15px;
+    font-size:14px;
+}
+.div_question
+{
+    margin:5px 0 0;
+    outline:none;
+    padding:8px;
+    border:1px solid #fff;
+}
+.div_question_onclick {
+    border:1px solid #0095da;
+}
+.div_question_mouseover {
+    border:1px solid  #fdb553;
+}
+.div_question_mouseover  {
+cursor:move;
+}
+.div_question_mouseovermerge
+{
+    cursor:default;
+}
+.div_question_move
+{
+    border: 1px dotted #0095da;
+}
+/***********************题型样式***************/
+
+.tabQTypet{background:#0095da;padding:0 2px;}
+
+.tabQTypet  LI {
+background: #0095da;
+width:68px;
+float:left;
+padding:6px 0;
+height:30px;
+}
+
+.tabQTypet li a
+{ 
+   display: block;
+    font-size: 14px;
+    cursor: pointer;
+    color: #FFF;
+	height:30px;
+	line-height:28px;
+    text-align:left;
+    border-right:1px solid #0072bc;
+}
+
+    .tabQTypet li a:hover,.tabQTypet li a.hover {
+       color:#f58220;
+		background:#FFF;
+		border-radius:4px;
+		margin:0px;
+    }
+.tabQTypet ul li a span
+{
+    vertical-align:middle;
+}
+.spanQTxt
+{
+    display:inline-block; line-height:16px; height:16px;
+}
+.bordBottomCssN
+{ margin-bottom:1px;
+}
+.tabQTypet ul LI A:hover,.tabQTypet ul LI a.hover {
+COLOR: #ff6600;
+}
+.tabQTypet a{text-decoration: none;}
+.downMenu ul LI A:hover 
+{
+	background-image: url(//image.sojump.com/images/wjx/index/rightTineliang.gif);
+	background-repeat: no-repeat;background-position : 4% 38%;
+}
+.downMenu ul li span{ text-align:left; font-weight:bold;}
+.downMenu ul li a{padding-top:5px;line-height:20px; width:84px;}
+.downMenu ul LI A:hover {padding-top:5px;line-height:20px;width:84px;}
+
+.fLine{clear: both; color:#ffffff;
+background:#ffffff;
+height:4px;
+padding:0;
+margin-bottom:0;
+margin-top:0;
+border:0;}
+/*题目里面的操作按钮引用的样式*/
+.stuff {
+    font-size:12px;FLOAT: left;height:23px; line-height: 23px;
+}
+.stuff li {
+     float: left; vertical-align:middle;border:1px solid #85c449;text-align:center;margin:0px 4px;border-radius:4px;
+}
+.sutff .editfinish{
+    border:1px solid #ff6600 !important;
+}
+.stuff li A span
+{
+    vertical-align:middle;display:inline-block;
+}
+.stuff li A,.stuff li A:visited  {
+    vertical-align:bottom; DISPLAY: inline-block;margin:0; cursor: pointer; COLOR:#6d6e71;
+        text-decoration:none; padding-right:6px;   padding-left:6px;
+}
+
+.stuff li A:hover {
+    color:#ff6600;
+}
+/********量表样式*********/
+ .likertImageTypeList li {
+cursor:pointer; margin-right:4px; float:left;line-height:24px;
+}
+/**********************选择题选项样式****************************/
+.choiceimg
+{
+    cursor:pointer;margin:0 3px 2px; vertical-align:bottom;
+}
+.choicetxt
+{
+    height:18px; padding:2px 3px; font-size:14px; border:solid 1px #cdcdcd;
+}
+.matrixhead {
+    height:32px;
+    line-height:32px;
+    background:#e1e0e0;
+}
+.tableoption
+{
+    padding:0px;
+    background:none;
+}
+.tableoption tr
+{
+    height:26px;
+}
+.tableoption td
+{
+    border:0px;
+    padding:7px 5px 0;
+}
+    .tableoption tr:first-child td {
+        padding:3px 5px;
+        color:#333333;
+        height:26px;
+    }
+.tableoption input,.tableoption span,.tableoption a
+{
+    vertical-align:middle;
+}
+textarea {
+    font-family: "微软雅黑","Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size:14px;
+}
+.div_table_radio_question{
+    padding-top:0px;
+}
+.div_table_radio_question li {
+    line-height:22px;
+}
+.notchoice {
+    line-height:20px !important;
+}
+/*******************图标样式*****************************/
+.design-icon {
+background-image:url("//image.sojump.com/images/Design/icoall.png?v=1");
+background-repeat:no-repeat;
+display: inline-block;
+overflow:hidden;
+vertical-align:middle;
+height:16px;width:17px; margin:0 3px 0 0;
+}
+.design-qtype {
+    height: 20px;
+    width: 23px;
+    margin:0 3px 0 6px;
+}
+.design-radio {
+background-position:-356px -66px;
+}
+.tabQTypet li a:hover .design-radio {
+    background-position: -386px -66px;
+}
+.design-check
+{
+    background-position:-357px -99px;
+}
+.tabQTypet li a:hover .design-check {
+    background-position: -387px -99px;
+}
+.design-text {
+background-position:-355px -132px;
+}
+.tabQTypet li a:hover .design-text,.tabQTypet li a.hover .design-text {
+    background-position: -388px -132px;
+}
+.design-juzhen {
+background-position:-355px -166px;
+}
+.tabQTypet li a:hover .design-juzhen,.tabQTypet li a.hover .design-juzhen {
+    background-position: -389px -166px ;
+}
+.design-upload {
+    background-position: -356px -202px;
+}
+.tabQTypet li a:hover .design-upload {
+    background-position: -388px -202px;
+}
+.design-likert{
+    background-position:-354px -234px;
+}
+.tabQTypet li a:hover .design-likert,.tabQTypet li a.hover .design-likert {
+    background-position: -388px -234px;
+}
+.design-exam{
+    background-position:-355px -269px;
+}
+.tabQTypet li a:hover .design-exam,.tabQTypet li a.hover .design-exam {
+    background-position: -388px -269px;
+}
+.design-toupiao{
+    background-position:-356px -309px;
+}
+.tabQTypet li a:hover .design-toupiao,.tabQTypet li a.hover .design-toupiao {
+    background-position: -386px -309px;
+}
+.design-page {
+    background-position: -356px -346px;
+}
+.tabQTypet li a:hover .design-page {
+    background-position: -388px -346px;
+}
+.design-cut{
+    background-position:-356px -381px;
+}
+.tabQTypet li a:hover .design-cut {
+    background-position: -389px -381px;
+}
+.design-sort {
+    background-position:-356px -487px;
+}
+.tabQTypet li a:hover .design-sort {
+    background-position: -390px -487px;
+}
+.design-high {
+    background-position:-356px -415px;
+}
+.tabQTypet li a:hover .design-high,.tabQTypet li a.hover .design-high {
+    background-position: -387px -415px;
+}
+.design-info{
+    background-position:-356px -448px;
+}
+.tabQTypet li a:hover .design-info,.tabQTypet li a.hover .design-info {
+    background-position: -389px -448px;
+}
+.design-add
+{
+    background-position:-49px -113px;width:20px;height:20px;
+}
+.design-minus
+{
+    background-position:-72px -113px;width:20px;height:20px;
+}
+.design-cdown
+{
+    background-position:-96px -113px;width:20px;height:20px;
+}
+.design-cup
+{
+    background-position:-120px -113px;width:20px;height:20px;
+}
+.design-ctext {
+    background-position:-82px -77px;width:12px;height:14px;margin-left:5px;
+}
+.design-img
+{
+     background-position:-52px -221px;height:17px;width:19px;
+}
+.design-img:hover,.design-imgedit
+{
+     background-position:-52px -263px;height:17px;width:19px;
+}
+.design-desc
+{
+     background-position:-90px -219px;height:22px;width:18px;
+}
+.design-desc:hover,.design-descedit
+{
+     background-position:-90px -260px;height:22px;width:18px;
+}
+.design-date
+{
+    background-position:-20px -119px;height:16px;width:16px;
+}
+.design-singleadd {
+   background-position:-79px -327px;width:20px;height:17px;
+   margin:0 5px 1px 0;
+}
+
+.design-edit
+{
+    background-position:-105px -77px;
+}
+.design-copy
+{
+    background-position:-109px -43px;
+}
+.design-first
+{
+    background-position:-347px -43px;
+}
+.design-last
+{
+    background-position:-406px -43px;
+}
+.design-down
+{
+    background-position:-287px -43px;
+}
+.design-up
+{
+    background-position:-226px -43px;
+}
+.design-qmark {
+    background-position:-49px -76px;width:16px;margin:0 0 2px 3px;
+    cursor:pointer;
+}
+a.batchadd,a.batchadd:visited
+{
+    color:#4aa103;
+    text-decoration:none;
+}
+a.batchadd:hover
+{
+    color:#ff9900;
+}
+.checkbox {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    vertical-align:middle;
+}
+.design-preview {
+    background-position: -42px -2px;
+    width: 25px;
+    height: 21px;
+    margin-right: 8px;
+}
+
+.design-delete {
+    background-position: -167px -43px;
+}
+.design-badd {
+    background-position:-55px -326px;
+    height: 17px;
+    width: 20px;
+    margin: 0 5px 1px 0;
+}
+.design-finish {
+    background-position: -49px -43px;
+}
+
+ .off2:hover{
+     background-position:0 -28px;
+ }
+.off3:hover {
+    background-position: 0 -28px;
+}
+.off4:hover {
+    background-position: 0 -27px;
+}
+.design-off6 {
+    background-position: -123px -153px;
+    height: 22px;
+    width: 27px;
+}
+.design-on6,.design-off6:hover {
+    background-position:-123px -182px;
+}
+.design-offr {
+    background-position: -356px -66px;
+    height: 20px;
+    width: 22px;
+}
+
+.div_title_attr_question select {
+    height:22px; line-height:22px;padding:0px 6px;border: solid 1px #a9a9a9;
+      appearance:none;-moz-appearance:none;-webkit-appearance:none;background: url("/images/arrow.png") no-repeat scroll right center #ffffff;
+      padding-right: 14px;vertical-align: middle; 
+    padding-right:0px\0;background:#ffffff\0;
+}
+
+#m-rightbar {
+	z-index:99;
+	width:45px;
+	height:156px;
+	right: -45px;
+    top:250px;
+    position: absolute;
+}
+.m-menu {
+	width:45px;
+	height:156px;
+}
+.m-menu li a {
+	width:45px;
+	height:39px;
+	display:block;
+	text-indent:-9999px;
+	outline:0;
+}
+.m-top, .m-help, .m-comment, .m-bottom {
+	background:url(/static/cpis/images/mysojump/rightbar.gif) no-repeat;
+	width:45px;
+	height:39px
+}
+.m-top a:hover, .m-help a:hover, .m-comment a:hover, .m-bottom a:hover {
+	background:url(/static/cpis/images/mysojump/rightbar-hover.gif) no-repeat;
+}
+.m-help,.m-help a:hover {
+	background-position:0 -39px;
+}
+
+.m-comment,.m-comment a:hover{
+	background-position:0 -78px;
+}
+.m-bottom,.m-bottom a:hover{
+	background-position:0 -117px;
+	}
+#status_tip 
+{
+ height:50px; 
+ background:#f04810;
+ margin:10px 0;
+ left:790px;
+ position:absolute;
+ display:none;
+ padding:5px; 
+ color:white;
+ font-size:14px;
+ font-weight:bold;
+ z-index:3000;
+}   
+#status_tip a{ color:#FFFF00;}
+#status_tip a:hover{color:#FDEADA;}
+         
