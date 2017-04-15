@@ -3250,7 +3250,7 @@ function save_paper(c, af, L) {
     ar[0]._partset = "";
     ar[0]._random_mode = WjxActivity._random_mode;
     if (ar[0]._random_mode == "3") {
-        ar[0]._partset = WjxActivity._partset;
+        ar[0]._partset = WjxActivity._partset0;
         var z = WjxActivity._partset.split(",");
         var y = "";
         var d = true;
@@ -3397,6 +3397,7 @@ function save_paper(c, af, L) {
             J++;
         }
     }
+    
     ar[0]._total_page = J;
     var l = new StringBuilder();
     var an = false;
@@ -3666,23 +3667,28 @@ function save_paper(c, af, L) {
     if (window.isTiKu) {
         g = "tid=" + tikuId;
     }
-    var f = "/Handler/designQHandler.ashx?submitType=redesign&" + g + "&userguid=" + userGuid + "&validate_text=ys&t=" + (new Date()).valueOf() + "&sstate=" + encodeURIComponent(c);
-    f += "&totalq=" + n;
+    
+   /* var f = "/Handler/designQHandler.ashx?submitType=redesign&" + g + "&userguid=" + userGuid + "&validate_text=ys&t=" + (new Date()).valueOf() + "&sstate=" + encodeURIComponent(c);*/
+    var f="/cpis/addexercise/";
+   // f += "&totalq=" + n;
     if (c == "pub") {
-        f += "&pub=1";
+       // f += "&pub=1";
     }
     if (c == "pub2") {
-        f += "&pub=2";
+       // f += "&pub=2";
     }
+
     if (L) {
         v.open("post", f, false);
     } else {
+    	alert("aa");
         v.open("post", f);
+        alert("bb");
     }
     v.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     if (!L) {
         v.onreadystatechange = function() {
-            if (v.readyState == 4) {
+        	if (v.readyState == 4) {
                 if (timeoutTimer) {
                     clearTimeout(timeoutTimer);
                 }
@@ -3704,6 +3710,7 @@ function save_paper(c, af, L) {
         sendStr = sendStr.replace(ad, "**");
     }
     l.clear();
+
     if (c == "init") {
         prevSaveData = sendStr;
         show_status_tip("成功加载", 1000);
@@ -3712,7 +3719,7 @@ function save_paper(c, af, L) {
     }
     havereturn = false;
     if (sendStr == prevSaveData && c != "pub2") {
-        saveSuc(c);
+    	saveSuc(c);
     } else {
         if (!L) {
             timeoutTimer = setTimeout(function() {
@@ -3724,7 +3731,7 @@ function save_paper(c, af, L) {
             } else {
                 postWithIframe(f);
             }
-        }
+        } 
         if (L) {
             v.send("surveydata=" + encodeURIComponent(sendStr));
             var Y = afterSave(unescape(v.responseText), c);
@@ -3768,7 +3775,8 @@ function finishEditing(c) {
     if (window.isTiKu) {
         d = "tid=" + tikuId;
     }
-    var b = "Handler/designqfinish.ashx?" + d;
+    /*var b = "Handler/designqfinish.ashx?" + d;*/
+    var b = "/cpis/addexercise/";
     a.open("post", b, false);
     a.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     a.send("edit=true");
@@ -3842,20 +3850,23 @@ function afterSave(e, d) {
     return b;
 }
 function goBack() {
-    var a = "/wjx/design/designstart.aspx?activity=" + activityID;
+    //var a = "/wjx/design/designstart.aspx?activity=" + activityID;
+    var a = "/cpis/";
     if (window.isTiKu) {
-        a = "/wjx/manage/finishtiku.aspx?tid=" + tikuId;
+        //a = "/wjx/manage/finishtiku.aspx?tid=" + tikuId;
+        a = "/cpis/";
     }
     windowGotoUrl(a);
 }
 function saveSuc(a) {
-    show_status_tip("ä¿å­é®å·æåï¼" + saveNotifyText, 3000);
+    show_status_tip("保存成功" + saveNotifyText, 3000);
     if (a == "pub" || a == "pub2") {
         if (isTiyan) {
             tiyanReg(true);
         } else {
             if (a == "pub") {
-                goBack();
+               
+            	goBack();
             } else {
                 windowGotoUrl("/wjx/design/designstart.aspx?activity=" + activityID + "&action=1");
             }

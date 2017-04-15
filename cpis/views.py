@@ -77,6 +77,11 @@ def createexercise(request):
         raise Http404()
     #练习填写页面
     return render(request, 'cpis/lxlr_detail.html', context=None)
+ 
+
+def addexercise(request):
+    print request.POST
+    return HttpResponse('aaa')
     
 @csrf_exempt
 @login_required(login_url=settings.LOGIN_URL)

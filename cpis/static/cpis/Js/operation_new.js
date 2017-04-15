@@ -595,8 +595,9 @@ function changeQ(d) {
 }
 
 function createFreQ(a, g, h) {
+	//createFreQdataNode函数根据传入的参数不同生成不同的要插入的数据对象
     var f = createFreQdataNode(a, g, h);
-    var e = createQ(f);
+    var e = createQ(f);//?在f下面拼接插入点
     if (firstPage) {
         firstPage.style.display = "";
     }

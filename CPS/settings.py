@@ -1,3 +1,4 @@
+#-*-coding:utf-8-*-
 """
 Django settings for CPS project.
 
@@ -128,3 +129,4 @@ LOGIN_URL='/cpis/'
 #AUTH_USER_MODEL='cpis.Student'
 #AUTH_USER_MODEL='cpis.Teacher'
 #AUTH_USER_MODEL='auth.User'
+APPEND_SLASH=False #可以直接访问链接

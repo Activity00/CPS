@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^ajax_deal/$',views.ajax_deal,name='ajax_deal'),
     url(r'^mainpage/$',views.mainPage,name='mainpage'),
     url(r'^createexercise/$',views.createexercise,name='createexercise'),
+    url(r'^addexercise/$',views.addexercise,name='addexercise'),#提交练习
     url(r'^submitquestion/$',views.submitquestion,name="submitquestion"),#提交练习
     url(r'^publishpratice/$',views.publishpratice,name="publishpratice"),
     url(r'^studentanswer/$',views.studentanswer,name="studentanswer"),
